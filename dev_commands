@@ -1,0 +1,45 @@
+python3 -m venv opgvenv
+
+django-admin startproject app .
+django-admin startapp api
+
+# Create database
+`sudo apt install postgresql postgresql-contrib`
+`sudo su - postgres`
+`psql`
+`CREATE DATABASE opgrowth;`
+`CREATE USER gtpaper WITH PASSWORD 'opgrowth';`
+`GRANT ALL PRIVILEGES ON DATABASE gtpaper TO opgrowth;`
+
+# Add to databases in settings.py
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'gtpaper',
+        'USER': 'gtpaper',
+        'PASSWORD': 'gtpaper',
+        'HOST': 'localhost',
+        'POST': '',
+
+pip install psycopg2
+
+python3 manage.py migrate
+python3 manage.py createsuperuser --email christian@example.com --username christian
+
+# Show location of installed package
+pip show django
+pip show Py2PDF
+
+# Client setup
+sudo apt-get install nodejs
+sudo apt-get install npm
+
+npm cache verify # checksum error occurred
+npx create-react-app client
+
+npm install papa-parse
+npm install recharts
+# typescript?
+
+cd client/
+rm -rf .git # want git to cover both server and client
+
+

@@ -1,0 +1,8 @@
+2581c2581
+<     def extractText(self):
+---
+>     def extractText(self, Tj_sep="", TJ_sep=""):
+2602a2603
+>                     text += Tj_sep
+2618a2620
+>                         text += TJ_sep

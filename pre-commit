@@ -15,11 +15,9 @@ echo -e "Running black and flake8 before commit . . .\n"
 
 # Piping to xargs is simply to remove extra whitespace (also turns inbetween spaces to 1)
 flake_result=$(flake8 . | xargs)
-#black .
+black .
 
-echo test \"$flake_result\"
-
-# If result is non-zero, any string at all, then there are errors to fix
+# An "empty" result of flake8 is an empty line with no other output (aka no errors)
 if [[ $flake_result == "\n" ]]; then
     echo "Tests must pass before commit. Please fix and commit again."
 

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Run unit tests automatically with a pre-commit hook.
+# ---
+# This file will be run by git on commit (name as pre-commit, no extension),
+# and will finish the commit once the tests run successfully.
+#
+# (See https://blog.devgenius.io/automate-unit-tests-before-each-commit-by-git-hook-f331f0499786)
+
+script_base=$(dirname $0)
+cd $script_base/../../  # move to project root
+cd server/              # move to location of python code
+
+echo -e "Running black and flake8 before commit . . .\n"
+
+flake_result=$(flake8 .)
+black .
+
+echo $flake_result
+
+# If result is non-zero, any string at all, then there are errors to fix
+if [ -n $flake_result ]; then
+    echo "Tests must pass before commit. Please fix and commit again."
+
+    exit 1 # Fail commit on non-zero exit code
+fi

@@ -11,7 +11,9 @@ project_dir="$absolute_dir/.."
 
 source $relative_dir/utils.sh
 
-shell_files=$(pushd $project_dir > /dev/null && git ls-files -- *.sh && popd > /dev/null)
+#shell_files=$(pushd $project_dir > /dev/null && git ls-files -- *.sh && popd > /dev/null)
+cd $project_dir
+shell_files=$(git ls-files -- *.sh)
 
 for path in $shell_files
 do

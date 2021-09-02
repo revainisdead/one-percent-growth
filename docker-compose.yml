@@ -1,16 +1,31 @@
 version: "3.7"
 
 services:
-    ca-vis:
-        container_name: ca-vis
-        stdin_open: true    # -i
-        tty: true   # -t
+    frontend:
+        container_name: frontend
+        stdin_open: true    # -i (equivalent from docker command options)
+        tty: true           # -t (equivalent from docker command options)
         build:
             context: .
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile-frontend
         volumes:
             - '.:/app'
             - '/app/node_modules'
+        ports:
+            - 3001:3000
+        environment:
+            - CHOKIDAR_USEPOLLING=true
+
+    backend:
+        container_name: backend
+        stdin_open: true    # -i (equivalent from docker command options)
+        tty: true           # -t (equivalent from docker command options)
+        build:
+            context: .
+            dockerfile: Dockerfile-backend
+        #volumes:
+        #    - '.:/app'
+        #    - '/app/node_modules'
         ports:
             - 3001:3000
         environment:

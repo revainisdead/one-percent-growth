@@ -22,9 +22,7 @@ def get_secret_key():
         with open(os.path.join(SECRET_LOCATION, SECRET_FILE), "r") as f:
             return f.read().rstrip()
     except (FileNotFoundError, PermissionError) as e:
-        print(
-            "Error: must put secret file in the correct secret location. {}".format(e)
-        )
+        print("Error: must put secret file in the correct secret location. {}".format(e))
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

@@ -13,14 +13,17 @@ cd server/              # move to location of python code
 
 echo -e "Running black and flake8 before commit . . .\n"
 
-flake_result=$(flake8 .)
-black .
+# Piping to xargs is simply to remove extra whitespace (also turns inbetween spaces to 1)
+flake_result=$(flake8 . | xargs)
+#black .
 
-echo $flake_result
+echo test \"$flake_result\"
 
 # If result is non-zero, any string at all, then there are errors to fix
-if [ -n $flake_result ]; then
+if [[ $flake_result == "\n" ]]; then
     echo "Tests must pass before commit. Please fix and commit again."
 
     exit 1 # Fail commit on non-zero exit code
 fi
+
+exit 0

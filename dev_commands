@@ -48,6 +48,15 @@ npm install redux
 npm install redux-thunk
 npm install reselect
 npm install @reduxjs/toolkit
+npm install underscore
 
 npm show redux-devtools-extension
 
+pip install black
+
+cd server/
+black .
+
+# See server/dev_only_pip.sh
+cp requirements.txt requirements-dev.txt
+pip freeze | grep black >> requirements-dev.txt

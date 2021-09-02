@@ -1,4 +1,6 @@
-import { Provider as ReduxProvider } from "react-redux";
+import React from "react";
+
+import { connect } from "react-redux";
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -6,9 +8,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import Papa from 'papaparse';
-
-import { store } from "./store/store.js";
-
 
 const App = () => {
     const fileClick = () => document.getElementById('file-input').click();
@@ -31,22 +30,17 @@ const App = () => {
     }
 
     return (
-        <ReduxProvider store={store}>
-            <div className="app">
-                <Container fluid className="m-4">
-                    <Row>
-                        <Col>
-                            <Button onClick={fileClick}>Open</Button>
-                            <input id="file-input" type="file" name="name" style={{"display": "none"}} />
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
-        </ReduxProvider>
+        <div className="app">
+            <Container fluid className="m-4">
+                <Row>
+                    <Col>
+                        <Button onClick={fileClick}>Open</Button>
+                        <input id="file-input" type="file" name="name" style={{"display": "none"}} />
+                    </Col>
+                </Row>
+            </Container>
+        </div>
     );
-}
-
-//<header className="App-header">
-//</header>
+};
 
 export default App;

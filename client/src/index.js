@@ -4,14 +4,14 @@ import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./index.css";
-import App from "./app.js";
+import TopApp from "./top-app.js";
 import reportWebVitals from "./reportWebVitals";
 
 
 ReactDOM.render(
     (
         <React.StrictMode>
-            <App />
+            <TopApp />
         </React.StrictMode>
     ),
     document.getElementById('root')

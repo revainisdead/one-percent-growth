@@ -42,4 +42,12 @@ npm install recharts
 cd client/
 rm -rf .git # want git to cover both server and client
 
+npm install react-bootstrap bootstrap
+npm install react-redux
+npm install redux
+npm install redux-thunk
+npm install reselect
+npm install @reduxjs/toolkit
+
+npm show redux-devtools-extension
 

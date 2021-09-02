@@ -1,0 +1,110 @@
+OPG Design
+
+Run front end in Docker
+Run back end in Docker
+Set up redux
+
+Learn what Docker is really doing with the file system, learn how to simply identify how Docker is manipulating VM. Same as usual working with a vm but with its own commands, command the container!!
+
+Gospel
+If a react subcomponent is in its own file, it’s used by more than one other component
+If a react sub component is in the same file as another component, it’s ONLY used within that file.
+
+The more your tests resemble the way your software is used, the more confidence they can give you.
+
+https://testing-library.com/docs/guiding-principles
+
+“Testing library”
+test dom nodes
+test from user’s perspective
+“Jest”
+works together with above
+unit testing / test runner?
+testing “framework”
+
+Patch-pipeline
+Patches
+Hashes
+Sym link to files??? (Want to refer to original file, without moving it)
+Extract-text script
+
+Mypy from the get go
+stubgen
+Generate base files of DRF to work with
+
+Model serializer after finalizing csv json
+use fetch / create promises practice
+
+Later
+Add typescript
+Figure out how to solve token situation with promise in GTP (shouldn’t be so hard)
+
+
+—
+
+Vim macro: remove last char from line ($d) add j to go down a line so it will line up for next macro
+Reusable function: run macro n times
+
+Vim idea: JavaScript ease: commands for inserting // and /* */
+
+Reminder for stubs: yaml file script but for custom line (file type = python…)
+
+Copy builtin stubs that I use from the get go… or just copy them all
+
+Black, flake8, isort
+
+How to use setup.cfg / similar???
+
+—
+
+
+Filtering on front end is great and I’m good at it with react and js etc but I want to learn filtering on the backend as well:
+
+Use django-filter with rest framework to filter per model attribute
+
+
+One percent growth - CHARTS
+—
+Chart for “where” I’ve spent money at the money (scatter plot / dots?)
+Earnings since…
+Chart for “savings” going up
+Chart for just income
+Chart for just spending
+
+Student loan interest chart
+Savings interest chart
+Chart for total savings going UP or DOWN (best way to visualize?)
+
+
+“Student Loan” Link
+two student loans
+“Savings” Link
+
++ Student loan Abstract model? (Common fields between
+
+Implement prepare_for_serialize
+Fix names as: going TO BACKEND
+Implement prepare_for_deserialize
+Fix names as: coming FROM BACKEND
+
+
+OnePercentGrowth motivation:
+create backend api with django again
+This time nested serializers (custom create methods), no graphql
+Models, serializers, views
+Front end REACT (create hooks, reusable “use” statements…)
+MaterialUI?
+Redux
+Coffeescript…?
+Common redux reducer!!!
+BankRecordSerializer(data=json_data)
+Or enter data through url on FRONT END
+Delta_type (choices = increase or decrease
+End of sprint: earned morning to create api and learn (new goal: put django API in Its own Docker container, but what about postgres/db?)
+Underscore
+Mypy…
+Small project, but if I had all of this and it was beautiful and worked great and had react hooks, I think this will be a perfect project to show off.
+
+
+Docker note:
+You don’t even need things to be installed on the machine anymore, you have a Dockerfile to loads up environment variables, install things, and all of a sudden you don’t need that stuff on the local dev machine anymore (but salt stack still helpful for setting up my dev machine (obviously) or settling up a server or many servers, but the reality is I think we are LITERALLY running production software in a Docker container…… so sever setup goes away, and server setup within Docker confit files enters)

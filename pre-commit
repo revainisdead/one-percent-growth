@@ -21,9 +21,7 @@ require_dependencies() {
     commonname=$2
 
     success_first_line="Name: ${commonname}"
-    echo test1 $success_first_line
 
-    echo test2 $output
     if [[ $output == $success_first_line ]]; then
         cecho "${commonname} is installed. Continuing." yellow
     else
@@ -37,7 +35,7 @@ require_dependencies() {
 pip_flake8_output=$(python3 -m pip show flake8 |& head -1)
 pip_black_output=$(python3 -m pip show black |& head -1)
 
-# If flake8 or black are not available, fail test
+# If flake8 or black are not available, fail test (won't work without quotes around variable)
 require_dependencies "$pip_flake8_output" "flake8"
 require_dependencies "$pip_black_output" "black"
 

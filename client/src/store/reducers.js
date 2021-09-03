@@ -20,7 +20,7 @@ const rootReducer = (state = {}, action) => {
         //        ...state,
         //        [action.key]: state[action.key].concat(action.value)
         default:
-            return state
+            return state;
     }
 }
 

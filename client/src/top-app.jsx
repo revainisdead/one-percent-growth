@@ -2,7 +2,7 @@ import React from "react";
 
 import { Provider as ReduxProvider } from "react-redux";
 
-import App from "./app.js";
+import App from "./app.jsx";
 import { store } from "./store/store.js";
 
 

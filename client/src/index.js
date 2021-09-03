@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./index.css";
-import TopApp from "./top-app.js";
+import TopApp from "./top-app.jsx";
 import reportWebVitals from "./reportWebVitals";
 
 

@@ -49,6 +49,7 @@ npm install redux-thunk
 npm install reselect
 npm install @reduxjs/toolkit
 npm install underscore
+npm install moment
 
 npm show redux-devtools-extension
 

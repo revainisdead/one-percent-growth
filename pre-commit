@@ -9,9 +9,37 @@
 
 script_base=$(dirname $0)
 cd $script_base/../../  # move to project root
+source scripts/utils.sh
+
 cd server/              # move to location of python code
 
+
 echo -e "Running black and flake8 before commit . . .\n"
+
+require_dependencies() {
+    output=$1
+    commonname=$2
+
+    success_first_line="Name: ${commonname}"
+    echo test1 $success_first_line
+
+    echo test2 $output
+    if [[ $output == $success_first_line ]]; then
+        cecho "${commonname} is installed. Continuing." yellow
+    else
+        cecho "${commonname} is missing. Perhaps you forgot to activate your virtual environment" red
+        exit 1
+    fi
+}
+
+
+# |& redirects both stdout and stderr to head (necessary to avoid "ERROR: Pipe to stdout was broken")
+pip_flake8_output=$(python3 -m pip show flake8 |& head -1)
+pip_black_output=$(python3 -m pip show black |& head -1)
+
+# If flake8 or black are not available, fail test
+require_dependencies "$pip_flake8_output" "flake8"
+require_dependencies "$pip_black_output" "black"
 
 # Piping to xargs is simply to remove extra whitespace (also turns inbetween spaces to 1)
 flake_result=$(flake8 . | xargs)
@@ -19,7 +47,7 @@ black .
 
 # An "empty" result of flake8 is an empty line with no other output (aka no errors)
 if [[ $flake_result == "\n" ]]; then
-    echo "Tests must pass before commit. Please fix and commit again."
+    cecho "Tests must pass before commit. Please fix and commit again." red
 
     exit 1 # Fail commit on non-zero exit code
 fi

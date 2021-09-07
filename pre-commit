@@ -8,18 +8,22 @@
 # (See https://blog.devgenius.io/automate-unit-tests-before-each-commit-by-git-hook-f331f0499786)
 
 script_base=$(dirname $0)
+# Script resides in .git/hooks
+project_root=$($script_base/../../)
+echo "Project root: $project_root"
 cd $script_base/../../  # move to project root
 source scripts/utils.sh
 
-# cd client/            # move to location of javascript code
+cd $project_root/client/            # move to location of javascript code
 echo -e "Running prettier and eslint (on Javascript) before commit . . ."
 
 # prettier
+prettier --write .
 # eslint
 # + typescript
 # + mypy
 
-cd server/              # move to location of python code
+cd $project_root/server/              # move to location of python code
 echo -e "Running black and flake8 (on Python) before commit . . .\n"
 
 require_dependencies() {

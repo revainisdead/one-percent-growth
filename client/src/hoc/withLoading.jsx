@@ -19,9 +19,7 @@ const withLogger = (Component) => {
 const Loading = (props) => {
     const msg = props.msg ? props.msg : "Loading . . .";
 
-    return (
-        <div class="loading spinner">{ msg }</div>
-    );
+    return <div class="loading spinner">{msg}</div>;
 };
 
 const withLoading = (Component) => {

@@ -62,3 +62,7 @@ black .
 # See server/dev_only_pip.sh
 cp requirements.txt requirements-dev.txt
 pip freeze | grep black >> requirements-dev.txt
+
+pip install mypy
+pip install djangorestframework-stubs
+

@@ -13,7 +13,10 @@ source $relative_dir/utils.sh
 
 #shell_files=$(pushd $project_dir > /dev/null && git ls-files -- *.sh && popd > /dev/null)
 cd $project_dir
-shell_files=$(git ls-files -- *.sh)
+#shell_files=$(git ls-files --full-name -- *.sh)
+#shell_files=$(find . -type f -print | grep ".sh" | sed "/node_modules/d" | sed "/.mypy_cache/d" | sed "/.sha1/d" | sed "/.git/d")
+
+shell_files=$(git ls-files | grep ".sh" | sed "/.sha1/d")
 
 for path in $shell_files
 do

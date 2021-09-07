@@ -2,10 +2,10 @@ import React from "react";
 
 import { connect } from "react-redux";
 
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import moment from "moment";
 
@@ -15,25 +15,20 @@ import { parseSavingsFile } from "./store/thunks.js";
 // load date value test
 //console.log(moment("9/3/2021", "MM/DD/YYYY").format())
 
-
 const App = (props) => {
     const { parseSavingsFile } = props;
 
     const [fileSet, setFileSet] = React.useState(false);
     const inputEl = React.useRef(null);
 
-    const fileClick = () => document.getElementById('file-input').click();
+    const fileClick = () => document.getElementById("file-input").click();
     const fileUploadChange = () => setFileSet(true);
 
     const acceptFileExt = () => {
-        const ext = [
-            ".csv",
-            ".xls",
-            ".xlsx",
-        ];
+        const ext = [".csv", ".xls", ".xlsx"];
 
         return ext.join(", ");
-    }
+    };
 
     React.useEffect(() => {
         //console.log('file set use effect', inputEl.current)
@@ -42,7 +37,7 @@ const App = (props) => {
         return () => {
             // Clean up loaded files
             inputEl.value = "";
-        }
+        };
     }, [fileSet, parseSavingsFile]);
 
     return (
@@ -57,7 +52,7 @@ const App = (props) => {
                             onChange={fileUploadChange}
                             type="file"
                             name="name"
-                            style={{"display": "none"}}
+                            style={{ display: "none" }}
                             accept={acceptFileExt()}
                         />
                     </Col>
@@ -76,11 +71,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         parseSavingsFile: (files) => {
-            console.log('does it get this far', files);
-            dispatch(parseSavingsFile(files))
+            console.log("does it get this far", files);
+            dispatch(parseSavingsFile(files));
         },
     };
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

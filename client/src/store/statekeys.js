@@ -1,3 +1,1 @@
-
-
-export const SAVINGS_FILE="SAVINGS_FILE";
+export const SAVINGS_FILE = "SAVINGS_FILE";

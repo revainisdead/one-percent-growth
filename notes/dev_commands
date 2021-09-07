@@ -50,6 +50,7 @@ npm install reselect
 npm install @reduxjs/toolkit
 npm install underscore
 npm install moment
+sudo npm install -g --save-dev prettier (-g for `prettier` command on system)
 
 npm show redux-devtools-extension
 

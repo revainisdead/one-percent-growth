@@ -15,3 +15,16 @@
 > The more your tests resemble the way
 > your software is used, the more
 > confidence they can give you.
+
+### To Do
+- File System Management Page - for uploaded documents
+- Javascript State Machine
+- Javascript: Testing Library Tests
+- Javascript: Jest Tests
+- Python: Mock Models
+- Python: Mock Requests
+- Add exludeFiles properly to .prettierrc
+    //{
+    //    "excludeFiles": "node_modules/**/*.js",
+    //    "options": {},
+    //},

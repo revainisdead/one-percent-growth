@@ -1,10 +1,7 @@
-import {
-    SET_KEY,
-    TOGGLE_KEY,
-} from "./actions.js";
+import { SET_KEY, TOGGLE_KEY } from "./actions.js";
 
 const rootReducer = (state = {}, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case SET_KEY:
             return {
                 ...state,
@@ -22,6 +19,6 @@ const rootReducer = (state = {}, action) => {
         default:
             return state;
     }
-}
+};
 
 export default rootReducer;

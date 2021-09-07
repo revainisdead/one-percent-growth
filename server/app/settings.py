@@ -38,7 +38,7 @@ SECRET_KEY = get_secret_key()
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [] # type: List[str]
+ALLOWED_HOSTS = []  # type: List[str]
 
 
 # Application definition

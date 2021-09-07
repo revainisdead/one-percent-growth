@@ -3,14 +3,14 @@ version: "3.7"
 services:
     frontend:
         container_name: frontend
-        stdin_open: true    # -i (equivalent from docker command options)
-        tty: true           # -t (equivalent from docker command options)
+        stdin_open: true # -i (equivalent from docker command options)
+        tty: true # -t (equivalent from docker command options)
         build:
             context: .
             dockerfile: Dockerfile-frontend
         volumes:
-            - '.:/app'
-            - '/app/node_modules'
+            - ".:/app"
+            - "/app/node_modules"
         ports:
             - 3001:3000
         environment:
@@ -18,8 +18,8 @@ services:
 
     backend:
         container_name: backend
-        stdin_open: true    # -i (equivalent from docker command options)
-        tty: true           # -t (equivalent from docker command options)
+        stdin_open: true # -i (equivalent from docker command options)
+        tty: true # -t (equivalent from docker command options)
         build:
             context: .
             dockerfile: Dockerfile-backend

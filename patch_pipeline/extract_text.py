@@ -37,50 +37,45 @@ with open("estatement-4-2020.pdf", "rb") as pdf_fileobj:
     # Find line Credit Dividend
     # remove next line
 
-
-
-    #Line 6: ACCOUNT: xxxxxxx
-    #Line 127: xxxxxx
-    #Line 167: xxxxxx
-
+    # Line 6: ACCOUNT: xxxxxxx
+    # Line 127: xxxxxx
+    # Line 167: xxxxxx
 
     # EACH TRANSACTION FORMAT
     # ---
-    #Line 19: Amount
-    #Line 20: Transaction Description
-    #Line 21: Date
+    # Line 19: Amount
+    # Line 20: Transaction Description
+    # Line 21: Date
 
     # Example transaction
     # ---
-    #Line 22: -1.08
-    #Line 23: 04-01
-    #Line 24: POS  APPLE.COM/BILL  866-712-7753 CAUS
+    # Line 22: -1.08
+    # Line 23: 04-01
+    # Line 24: POS  APPLE.COM/BILL  866-712-7753 CAUS
 
-    #class BankRecord      -> total savings after EACH transaction (zip up by dates???)
-    #class BankTransaction -> amount and details of each transaction
+    # class BankRecord      -> total savings after EACH transaction (zip up by dates???)
+    # class BankTransaction -> amount and details of each transaction
     amount = -1.08
 
     first_char = "a"
     # strip first character ->
     if first_char == "-":
-        delta_type = "increase" # DeltaChoices.INCREASE
+        delta_type = "increase"  # DeltaChoices.INCREASE
     elif first_char != "-":
-        delta_type = "decrease" # DeltaChoices.DECREASE
+        delta_type = "decrease"  # DeltaChoices.DECREASE
 
-    sale_system="POS"
-    seller="APPLY.COM/BILL"
-    phone_number="866-712-7753"
-    location_identifier="CAUS"
-
-
+    sale_system = "POS"
+    seller = "APPLY.COM/BILL"
+    phone_number = "866-712-7753"
+    location_identifier = "CAUS"
 
     # After every transaction: check if two lines later there is "Credit Dividend"
     # This marks the final transaction to parse
 
-    #Line 123: POS  GEICO  *AUTO  800-841-3000 DCUS
-    #Line 124: 15.47
-    #Line 125: 04-30
-    #Line 126: Credit Dividend
+    # Line 123: POS  GEICO  *AUTO  800-841-3000 DCUS
+    # Line 124: 15.47
+    # Line 125: 04-30
+    # Line 126: Credit Dividend
 
     for i, line in enumerate(text_lines):
         print("Line {}:".format(i), line)

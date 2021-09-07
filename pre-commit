@@ -9,7 +9,7 @@
 
 script_base=$(dirname $0)
 # Script resides in .git/hooks
-project_root=$($script_base/../../)
+project_root=$($script_base/../../; pwd) # Special command sub to print full path instead of "/../../"
 echo "Project root: $project_root"
 cd $script_base/../../  # move to project root
 source scripts/utils.sh

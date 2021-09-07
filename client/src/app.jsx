@@ -30,14 +30,14 @@ const App = (props) => {
         return ext.join(", ");
     };
 
+    // Adding callback as dependency is an alternative to defining inside useEffect
     React.useEffect(() => {
-        //console.log('file set use effect', inputEl.current)
         parseSavingsFile(inputEl.current.files[0]);
 
-        return () => {
-            // Clean up loaded files
-            inputEl.value = "";
-        };
+        //return () => {
+        //    // Clean up loaded files
+        //    inputEl.value = "";
+        //};
     }, [fileSet, parseSavingsFile]);
 
     return (

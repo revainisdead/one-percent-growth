@@ -20,14 +20,12 @@
 
 ### To Do
 
--   File System Management Page - for uploaded documents
--   Javascript State Machine
--   Javascript: Testing Library Tests
--   Javascript: Jest Tests
--   Python: Mock Models
--   Python: Mock Requests
--   Add exludeFiles properly to .prettierrc
-    //{
-    // "excludeFiles": "node*modules/\**/\_.js",
-    // "options": {},
-    //},
+- File System Management Page - for uploaded documents
+- Javascript State Machine
+- Javascript: Testing Library Tests
+- Javascript: Jest Tests
+- Python: Mock Models
+- Python: Mock Requests
+- Add exludeFiles properly to .prettierrc
+- JWT Authentication - https://www.bezkoder.com/react-jwt-auth/
+- useCallback Hook - Use with thunks, but still use mapDispatchToProps?

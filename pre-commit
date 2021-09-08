@@ -30,10 +30,7 @@ cd $project_root/
 expected_output="Success: no issues found"
 if command -v make &> /dev/null
 then
-    cecho "Running mypy . . ." yellow
-
-    # Change color to white for mypy command
-    cecho "" normal
+    cecho "Running mypy . . ." normal
 
     # Thankfully mypy gets the exit status right so we can use this syntax.
     if ! make mypy

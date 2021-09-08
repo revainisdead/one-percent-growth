@@ -18,91 +18,103 @@ cd $project_root  # move to project root
 # Includes
 source scripts/utils.sh
 
-cd $project_root/client/            # move to location of javascript code
-#cecho "Running prettier and eslint (on ./client) before commit . . ." yellow
 
-# prettier
+run_mypy() {
+    # Run mypy with make
+    cd $project_root/
 
-cecho "Running prettier . . ." normal
-prettier --write .
-echo ""
-# eslint
-
-
-cd $project_root/
-
-# Check make is available. Without brackets, exit code is checked
-expected_output="Success: no issues found"
-if command -v make &> /dev/null
-then
-    cecho "Running mypy . . ." normal
-
-    # Thankfully mypy gets the exit status right so we can use this syntax.
-    if ! make mypy
+    # Check make is available. Without brackets, exit code is checked
+    expected_output="Success: no issues found"
+    if command -v make &> /dev/null
     then
-        cecho "Mypy did not pass. Fix errors and commit again." red
-        exit 1
-    fi
-fi
+        cecho "Running mypy . . ." normal
 
-echo ""
-
-
-# Run mypy with make
-
-# + typescript
-# + mypy
-
-cd $project_root/server/              # move to location of python code
-#echo -e "Running black and flake8 (on ./server) before commit . . .\n"
-
-require_dependencies() {
-    output=$1
-    commonname=$2
-
-    success_first_line="Name: ${commonname}"
-
-    if [[ $output == $success_first_line ]]; then
-        cecho "${commonname} is installed. Continuing." blue
+        # Thankfully mypy gets the exit status right so we can use this syntax.
+        if ! make mypy
+        then
+            cecho "Mypy did not pass. Fix errors and commit again." red
+            exit 1
+        fi
     else
-        cecho "${commonname} is missing. Perhaps you forgot to activate your virtual environment" red
-        exit 1
+        cecho "Make was not available, could not run mypy. Install make with 'apt-get install gnu-make'" red
     fi
+
+    echo ""
 }
 
-# |& redirects both stdout and stderr to head (necessary to avoid "ERROR: Pipe to stdout was broken")
-pip_flake8_output=$(python3 -m pip show flake8 |& head -1)
-pip_black_output=$(python3 -m pip show black |& head -1)
+run_prettier() {
+    cd $project_root/client/            # move to location of javascript code
+    #cecho "Running prettier and eslint (on ./client) before commit . . ." yellow
 
-# If flake8 or black are not available, fail test (won't work without quotes around variable)
-require_dependencies "$pip_flake8_output" "flake8"
-require_dependencies "$pip_black_output" "black"
-echo ""
+    # prettier
 
-cecho "Running black . . ." normal
-black .
-echo ""
+    cecho "Running prettier . . ." normal
+    prettier --write .
+    echo ""
+    # eslint
+}
 
-cecho "Running flake8 . . ." normal
-# Piping to xargs is simply to remove extra whitespace (also turns inbetween spaces to 1)
-flake_result=$(flake8 . | xargs)
+black_flake8_setup() {
 
-# An "empty" result of flake8 is an empty line with no other output (aka no errors)
-if [[ $flake_result == "\n" ]]; then
-    cecho "Tests must pass before commit. Please fix and commit again." red
+    cd $project_root/server/              # move to location of python code
+    #echo -e "Running black and flake8 (on ./server) before commit . . .\n"
 
-    exit 1 # Fail commit on non-zero exit code
-else
-    cecho "Flake8 passed." green
-fi
+    require_dependencies() {
+        output=$1
+        commonname=$2
 
-echo ""
+        success_first_line="Name: ${commonname}"
 
-# Don't allow commits with debug statements
+        if [[ $output == $success_first_line ]]; then
+            cecho "${commonname} is installed. Continuing." blue
+        else
+            cecho "${commonname} is missing. Perhaps you forgot to activate your virtual environment" red
+            exit 1
+        fi
+    }
+
+    # |& redirects both stdout and stderr to head (necessary to avoid "ERROR: Pipe to stdout was broken")
+    pip_flake8_output=$(python3 -m pip show flake8 |& head -1)
+    pip_black_output=$(python3 -m pip show black |& head -1)
+
+    # If flake8 or black are not available, fail test (won't work without quotes around variable)
+    require_dependencies "$pip_flake8_output" "flake8"
+    require_dependencies "$pip_black_output" "black"
+
+    echo ""
+}
+
+run_black() {
+    # Adds any changes black makes to unstaged changes, good for putting format changes in its own commit
+    cecho "Running black . . ." normal
+    black .
+
+    echo ""
+}
+
+run_flake8() {
+
+    cecho "Running flake8 . . ." normal
+    # Piping to xargs is simply to remove extra whitespace (also turns inbetween spaces to 1)
+    flake_result=$(flake8 . | xargs)
+
+    # An "empty" result of flake8 is an empty line with no other output (aka no errors)
+    if [[ $flake_result == "\n" ]]; then
+        cecho "Tests must pass before commit. Please fix and commit again." red
+
+        exit 1 # Fail commit on non-zero exit code
+    else
+        cecho "Flake8 passed." green
+    fi
+
+    echo ""
+}
+
 check_for_debug() {
+    # Don't allow commits with debug statements
     cecho "Checking for debug statements . . ." yellow
-    declare -a statements=("console.log(" "debugger" "print(" "pdb.set_trace")
 
+    declare -a statements=("console.log(" "debugger" "print(" "pdb.set_trace")
     for statement in "${statements[@]}"
     do
         output=$(git diff --cached | grep $statement)
@@ -115,6 +127,13 @@ check_for_debug() {
 
     cecho "No debug statements found." green
 }
+
+
+run_mypy
+run_prettier
+black_flake8_setup
+run_black
+run_flake8
 check_for_debug
 
 # Reset to white for git output

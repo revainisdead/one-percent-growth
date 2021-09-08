@@ -77,4 +77,5 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
+console.log("test");
 export default connect(mapStateToProps, mapDispatchToProps)(App);

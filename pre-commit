@@ -101,20 +101,19 @@ echo ""
 # Don't allow commits with debug statements
 check_for_debug() {
     cecho "Checking for debug statements . . ." yellow
-    declare -a statements=("console.log" "debugger" "print" "import pdb")
+    declare -a statements=("console.log(" "debugger" "print(" "pdb.set_trace")
 
     for statement in "${statements[@]}"
     do
         output=$(git diff --cached | grep $statement)
-        echo Checking for $statement, test output: $output
 
         if [[ -z $output ]]; then
             cecho "Your staged changes contain debug or print statements, please remove them and commit again." red
             exit 1
-        else
-            cecho "No debug statements found." green
         fi
     done
+
+    cecho "No debug statements found." green
 }
 check_for_debug
 

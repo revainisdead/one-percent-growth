@@ -75,6 +75,7 @@ require_dependencies "$pip_black_output" "black"
 
 cecho "Running black . . ." normal
 black .
+echo "" # print blank line
 
 cecho "Running flake8 . . ." normal
 # Piping to xargs is simply to remove extra whitespace (also turns inbetween spaces to 1)
@@ -88,6 +89,8 @@ if [[ $flake_result == "\n" ]]; then
 else
     cecho "Flake8 passed." green
 fi
+
+echo ""
 
 # Don't allow commits with debug statements
 check_for_debug() {
@@ -106,5 +109,5 @@ check_for_debug() {
     done
 }
 
-echo -e "\n"
+echo ""
 exit 0

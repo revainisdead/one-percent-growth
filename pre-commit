@@ -17,9 +17,11 @@ cd $project_root  # move to project root
 source scripts/utils.sh
 
 cd $project_root/client/            # move to location of javascript code
-cecho "Running prettier and eslint (on ./client) before commit . . ." yellow
+#cecho "Running prettier and eslint (on ./client) before commit . . ." yellow
 
 # prettier
+
+cecho "Running prettier . . ." normal
 prettier --write .
 # eslint
 
@@ -47,7 +49,7 @@ fi
 # + mypy
 
 cd $project_root/server/              # move to location of python code
-echo -e "Running black and flake8 (on ./server) before commit . . .\n"
+#echo -e "Running black and flake8 (on ./server) before commit . . .\n"
 
 require_dependencies() {
     output=$1
@@ -56,7 +58,7 @@ require_dependencies() {
     success_first_line="Name: ${commonname}"
 
     if [[ $output == $success_first_line ]]; then
-        cecho "${commonname} is installed. Continuing." yellow
+        cecho "${commonname} is installed. Continuing." blue
     else
         cecho "${commonname} is missing. Perhaps you forgot to activate your virtual environment" red
         exit 1
@@ -71,11 +73,12 @@ pip_black_output=$(python3 -m pip show black |& head -1)
 require_dependencies "$pip_flake8_output" "flake8"
 require_dependencies "$pip_black_output" "black"
 
-# Piping to xargs is simply to remove extra whitespace (also turns inbetween spaces to 1)
-flake_result=$(flake8 . | xargs)
-
 cecho "Running black . . ." normal
 black .
+
+cecho "Running flake8 . . ." normal
+# Piping to xargs is simply to remove extra whitespace (also turns inbetween spaces to 1)
+flake_result=$(flake8 . | xargs)
 
 # An "empty" result of flake8 is an empty line with no other output (aka no errors)
 if [[ $flake_result == "\n" ]]; then

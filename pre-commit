@@ -73,6 +73,8 @@ require_dependencies "$pip_black_output" "black"
 
 # Piping to xargs is simply to remove extra whitespace (also turns inbetween spaces to 1)
 flake_result=$(flake8 . | xargs)
+
+cecho "Running black . . ." normal
 black .
 
 # An "empty" result of flake8 is an empty line with no other output (aka no errors)
@@ -80,6 +82,8 @@ if [[ $flake_result == "\n" ]]; then
     cecho "Tests must pass before commit. Please fix and commit again." red
 
     exit 1 # Fail commit on non-zero exit code
+else
+    cecho "Flake8 passed." green
 fi
 
 # Don't allow commits with debug statements

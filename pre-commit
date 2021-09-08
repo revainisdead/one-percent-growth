@@ -17,7 +17,7 @@ cd $project_root  # move to project root
 source scripts/utils.sh
 
 cd $project_root/client/            # move to location of javascript code
-echo -e "Running prettier and eslint (on ./client) before commit . . ."
+cecho "Running prettier and eslint (on ./client) before commit . . ." yellow
 
 # prettier
 prettier --write .
@@ -31,6 +31,9 @@ expected_output="Success: no issues found"
 if command -v make &> /dev/null
 then
     cecho "Running mypy . . ." yellow
+
+    # Change color to white for mypy command
+    cecho "" normal
 
     # Thankfully mypy gets the exit status right so we can use this syntax.
     if ! make mypy
@@ -99,4 +102,5 @@ check_for_debug() {
     done
 }
 
+echo -e "\n"
 exit 0

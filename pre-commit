@@ -11,6 +11,8 @@ script_base=$(dirname $0)
 
 project_root=$(cd $script_base/../../; pwd) # Special command sub to print full path instead of "/../../"
 echo "Project root: $project_root"
+echo ""
+
 cd $project_root  # move to project root
 
 # Includes
@@ -23,6 +25,7 @@ cd $project_root/client/            # move to location of javascript code
 
 cecho "Running prettier . . ." normal
 prettier --write .
+echo ""
 # eslint
 
 
@@ -41,6 +44,8 @@ then
         exit 1
     fi
 fi
+
+echo ""
 
 
 # Run mypy with make
@@ -72,10 +77,11 @@ pip_black_output=$(python3 -m pip show black |& head -1)
 # If flake8 or black are not available, fail test (won't work without quotes around variable)
 require_dependencies "$pip_flake8_output" "flake8"
 require_dependencies "$pip_black_output" "black"
+echo ""
 
 cecho "Running black . . ." normal
 black .
-echo -e "\n"
+echo ""
 
 cecho "Running flake8 . . ." normal
 # Piping to xargs is simply to remove extra whitespace (also turns inbetween spaces to 1)
@@ -90,14 +96,14 @@ else
     cecho "Flake8 passed." green
 fi
 
-echo -e "\n"
+echo ""
 
 # Don't allow commits with debug statements
 check_for_debug() {
     cecho "Checking for debug statements . . ." yellow
-    declare -a statements=("console.log" "debugger" "print\(" "import pdb")
+    declare -a statements=("console.log" "debugger" "print" "import pdb")
 
-    for statement in "${array[@]}"
+    for statement in "${statements[@]}"
     do
         output=$(git diff --cached | grep $statement)
         echo Checking for $statement, test output: $output
@@ -110,6 +116,7 @@ check_for_debug() {
         fi
     done
 }
+check_for_debug
 
 # Reset to white for git output
 cecho "" normal

@@ -75,7 +75,7 @@ require_dependencies "$pip_black_output" "black"
 
 cecho "Running black . . ." normal
 black .
-echo "" # print blank line
+echo -e "\n"
 
 cecho "Running flake8 . . ." normal
 # Piping to xargs is simply to remove extra whitespace (also turns inbetween spaces to 1)
@@ -90,7 +90,7 @@ else
     cecho "Flake8 passed." green
 fi
 
-echo ""
+echo -e "\n"
 
 # Don't allow commits with debug statements
 check_for_debug() {
@@ -105,9 +105,12 @@ check_for_debug() {
         if [[ -z $output ]]; then
             cecho "Your staged changes contain debug or print statements, please remove them and commit again." red
             exit 1
+        else
+            cecho "No debug statements found." green
         fi
     done
 }
 
-echo ""
+# Reset to white for git output
+cecho "" normal
 exit 0

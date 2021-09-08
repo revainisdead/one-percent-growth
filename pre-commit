@@ -44,6 +44,26 @@ require_dependencies() {
 }
 
 
+check_for_debug() {
+    declare -a statements=(
+        "console.log" \
+        "debugger" \
+        "print\(" \
+        "import pdb"
+    )
+
+    for statement in "${array[@]}"
+    do
+        output=$(git diff --cached | grep $statement)
+        echo Checking for $statement, test output: $output
+
+        if [[ -z $output ]]; then
+            cecho "Your staged changes contain debug or print statements, please remove them and commit again." red
+        fi
+    done
+
+}
+
 # |& redirects both stdout and stderr to head (necessary to avoid "ERROR: Pipe to stdout was broken")
 pip_flake8_output=$(python3 -m pip show flake8 |& head -1)
 pip_black_output=$(python3 -m pip show black |& head -1)

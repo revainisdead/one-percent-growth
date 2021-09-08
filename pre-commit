@@ -18,16 +18,42 @@ cd $project_root  # move to project root
 source scripts/utils.sh
 
 cd $project_root/client/            # move to location of javascript code
-echo -e "Running prettier and eslint (on Javascript) before commit . . ."
+echo -e "Running prettier and eslint (on ./client) before commit . . ."
 
 # prettier
 prettier --write .
 # eslint
+
+
+cd $project_root/
+# Check make is available. Without brackets, exit code is checked
+expected_output="Success: no issues found"
+if command -v make &> /dev/null
+then
+    #mypy_output=$(make mypy)
+
+    # True if mypy_output is equal to Success: no issues found* (literal matching)
+    #if [[ $mypy_output != "$expected_output*" ]]; then
+
+    # Use grep, since running `make mypy` print the command being ran in make first.
+    #if [[ $mypy_output | grep "$expected_output" ]]
+    if ! make mypy
+    then
+        cecho "Mypy did not pass. Fix errors and commit again." red
+        exit 1
+    else
+        cecho "Mypy passed." green
+    fi
+fi
+
+
+# Run mypy with make
+
 # + typescript
 # + mypy
 
 cd $project_root/server/              # move to location of python code
-echo -e "Running black and flake8 (on Python) before commit . . .\n"
+echo -e "Running black and flake8 (on ./server) before commit . . .\n"
 
 require_dependencies() {
     output=$1
@@ -41,27 +67,6 @@ require_dependencies() {
         cecho "${commonname} is missing. Perhaps you forgot to activate your virtual environment" red
         exit 1
     fi
-}
-
-
-check_for_debug() {
-    declare -a statements=(
-        "console.log" \
-        "debugger" \
-        "print\(" \
-        "import pdb"
-    )
-
-    for statement in "${array[@]}"
-    do
-        output=$(git diff --cached | grep $statement)
-        echo Checking for $statement, test output: $output
-
-        if [[ -z $output ]]; then
-            cecho "Your staged changes contain debug or print statements, please remove them and commit again." red
-        fi
-    done
-
 }
 
 # |& redirects both stdout and stderr to head (necessary to avoid "ERROR: Pipe to stdout was broken")
@@ -82,5 +87,27 @@ if [[ $flake_result == "\n" ]]; then
 
     exit 1 # Fail commit on non-zero exit code
 fi
+
+# Don't allow commits with debug statements
+check_for_debug() {
+    cecho "Checking for debug statements . . ." yellow
+    declare -a statements=(
+        "console.log" \
+        "debugger" \
+        "print\(" \
+        "import pdb"
+    )
+
+    for statement in "${array[@]}"
+    do
+        output=$(git diff --cached | grep $statement)
+        echo Checking for $statement, test output: $output
+
+        if [[ -z $output ]]; then
+            cecho "Your staged changes contain debug or print statements, please remove them and commit again." red
+            exit 1
+        fi
+    done
+}
 
 exit 0

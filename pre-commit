@@ -4,12 +4,11 @@
 # ---
 # This file will be run by git on commit (name as pre-commit, no extension),
 # and will finish the commit once the tests run successfully.
-#
-# (See https://blog.devgenius.io/automate-unit-tests-before-each-commit-by-git-hook-f331f0499786)
 
-script_base=$(dirname $0)
 
 # Script resides in .git/hooks
+script_base=$(dirname $0)
+
 project_root=$(cd $script_base/../../; pwd) # Special command sub to print full path instead of "/../../"
 echo "Project root: $project_root"
 cd $project_root  # move to project root
@@ -26,23 +25,18 @@ prettier --write .
 
 
 cd $project_root/
+
 # Check make is available. Without brackets, exit code is checked
 expected_output="Success: no issues found"
 if command -v make &> /dev/null
 then
-    #mypy_output=$(make mypy)
+    cecho "Running mypy . . ." yellow
 
-    # True if mypy_output is equal to Success: no issues found* (literal matching)
-    #if [[ $mypy_output != "$expected_output*" ]]; then
-
-    # Use grep, since running `make mypy` print the command being ran in make first.
-    #if [[ $mypy_output | grep "$expected_output" ]]
+    # Thankfully mypy gets the exit status right so we can use this syntax.
     if ! make mypy
     then
         cecho "Mypy did not pass. Fix errors and commit again." red
         exit 1
-    else
-        cecho "Mypy passed." green
     fi
 fi
 
@@ -91,12 +85,7 @@ fi
 # Don't allow commits with debug statements
 check_for_debug() {
     cecho "Checking for debug statements . . ." yellow
-    declare -a statements=(
-        "console.log" \
-        "debugger" \
-        "print\(" \
-        "import pdb"
-    )
+    declare -a statements=("console.log" "debugger" "print\(" "import pdb")
 
     for statement in "${array[@]}"
     do

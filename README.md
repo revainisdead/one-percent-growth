@@ -12,6 +12,10 @@
 -   If it has a react component, add .jsx extension to filename
 -   If it does not have a react component, add .js extension to filename
 
+#### -> Git
+-   Don't merge into feature branches (creates problems and extra merge commits)
+    `(alternative) git fetch; git rebase -i origin/develop`
+
 #### React testing library ("@testing-library/react")
 
 > The more your tests resemble the way

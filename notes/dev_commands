@@ -66,3 +66,4 @@ pip freeze | grep black >> requirements-dev.txt
 pip install mypy
 pip install djangorestframework-stubs
 
+# Note: On this system76 Ubuntu system, need to use pip3, python3, etc.

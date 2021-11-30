@@ -24,6 +24,22 @@
 
 ### To Do
 
+Apps
+- Banking
+- API
+- Accounts/Users
+- Student Loans
+
+Docker containers
+- client
+- server
+- postgres
+
+New scripts
+- `dump_db.sh`: Docker script with args etc to create dump of postgres db using psql
+    Problem: Just remembered when I tried to create the dump through docker it didn't fill out the file correctly. Hm
+- `version_checker.sh`: Check version of npm and node etc. Green/red updated or no (+ latest version)
+
 - File System Management Page - for uploaded documents
 - Javascript State Machine
 - Javascript: Testing Library Tests

@@ -40,14 +40,18 @@ class BankAccount(models.Model):
 class Checking(BankAccount):
     pass
 
+
 class Savings(BankAccount):
     pass
+
 
 class GesaCreditCard(BankAccount):
     pass
 
+
 class PayPalCreditCard(BankAccount):
     pass
+
 
 class Record:
     pass

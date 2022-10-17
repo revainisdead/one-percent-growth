@@ -17,3 +17,13 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
     permission_classes = [permissions.IsAuthenticated]
+
+
+def show_latest_sql():
+    from django.db import connection
+
+    latest_query = connection.queries[0]
+
+    sql = latest_query["sql"]
+
+    print("Latest Query Raw SQL:", sql)

@@ -21,6 +21,12 @@ Docs
 https://docs.djangoproject.com/en/3.2/ref/models/fields/
 
 """
+
+
+# TODO
+# Create "accounts" app
+# Create "banking" app
+
 from typing import Any
 
 from django.db import models
@@ -28,10 +34,22 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+# TODO Make abstract
 class BankAccount(models.Model):
-    date = models.DateField()
+    """
+    result
+    
+    user.accounts
+    """
 
-    user: User = models.ForeignKey(User, on_delete=models.PROTECT)
+    date = models.DateField()
+    #total =
+    #
+    records = 
+
+    # user.accounts
+    # User has many Bank Accounts
+    user: User = models.ForeignKey(User, related_name="accounts", on_delete=models.PROTECT)
 
     class Meta:
         abstract = True
@@ -53,5 +71,25 @@ class PayPalCreditCard(BankAccount):
     pass
 
 
+# class Transactions: ?
 class Record:
-    pass
+    """
+    results
+
+    on BankAccount instance:    account.records
+    on Record instance:         record.account.records
+                                record.account
+
+    When you see FK: that foreign key model CAN HAVE MANY of the model it's defined on
+    """
+
+    # 
+
+    # would be better to never delete this type of data so that it can be recovered if they add bank account back
+    # Delete record without deleting account: yes
+    #
+    # account.records
+    # BankAccount has many Records
+    account = models.ForeignKey(BankAccount, related_name="records", on_delete=models.PROTECT)  # type: BankAccount
+
+
